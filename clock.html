@@ -23,7 +23,7 @@
     <br></br>
     <input type="button" value=Start onclick="start()"> 
     <input type="button" value=Stop onclick="stop()"> 
-    <input type="button" value=Clear onclick="clear()"> 
+    <input type="button" value=Clear onclick="clearBox()"> 
     
     <script src="jquery-3.4.1.min.js"></script>
     <script>
@@ -53,8 +53,12 @@
     }
     function stop() {
         clearTimeout(t);
-        started = false;
     }
+    function clearBox() {
+        h0.textContent = "00:00:00";
+        seconds = 0; minutes = 0; hours = 0;
+    }
+
     function showCurrentTime() {
         var currentTime = new Date();
 
@@ -91,11 +95,6 @@
         
         console.log(hours);
         document.getElementById("time").value = clockTime;
-    }
-
-    function clear() {
-        h0.textContent = "00:00:00";
-        seconds = 0; minutes = 0; hours = 0;
     }
     </script>
 </body>
