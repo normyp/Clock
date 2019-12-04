@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Clock</title>
+</head>
+<body>
+    <input type="text" disabled="disabled" id="time" value="" size="50">
+    <!--<input type="text" disabled="disabled" id="stopwatch" value="" size="">--> <h1><time>00:00:00</time></h1>
+    <br></br>
+    <input type="button" value=Start onclick="start()"> 
+    <input type="button" value=Stop onclick="stop()"> 
+    
+    <script src="jquery-3.4.1.min.js"></script>
+    <script>
+        var h1 = document.getElementsByTagName('h1')[0],
+        seconds = 0, minutes = 0, hours = 0,
+        t;
+        var started = false;
+            window.setInterval(function() {
+                showCurrentTime();
+                if(started)
+                {
+                    add();
+                }
+                tick();
+            }, 1000);
+    function start() {
+        t = setTimeout(add, 1000);
+        started = true;
+    }
+    function add() {
+        seconds++;
+        if (seconds >= 60) {
+            seconds = 0;
+            minutes++;
+            if (minutes >= 60) {
+                minutes = 0;
+                hours++;
+            }
+        }
+    
+    h1.textContent = (hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
+
+    start();
+    }
+    function stop() {
+        clearTimeout(t);
+        started = false;
+    }
+    function showCurrentTime() {
+        var currentTime = new Date();
+
+        var hours = currentTime.getHours();
+        var minutes = currentTime.getMinutes();
+        var seconds = currentTime.getSeconds();
+        var milliseconds = currentTime.getMilliseconds();
+
+        var meridian = "AM";
+        var noon = "12";
+        if (hours >= noon)
+	    {
+		    meridian = "PM";
+	    }
+
+	    if (hours > noon)
+	    {
+		    hours = hours - 12;
+        }
+        // Set Minutes
+        if (minutes < 10)
+        {
+            minutes = "0" + minutes;
+        }
+ 
+        // Set Seconds
+        if (seconds < 10)
+        {
+            seconds = "0" + seconds;
+        }
+
+        // put together the string that displays the time
+        var clockTime = hours + ':' + minutes + ':' + seconds + " " + meridian + "!";
+        
+        console.log(hours);
+        document.getElementById("time").value = clockTime;
+    }
+    </script>
+</body>
+</html>
