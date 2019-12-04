@@ -1,33 +1,40 @@
 <!doctype html>
 <html>
+    <style>
+    input[type=text], select {
+        width: 7.5%;
+        padding: 12px 0px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        text-align: center;
+    }
+    </style>
 <head>
     <meta charset="utf-8">
     <title>Clock</title>
 </head>
 <body>
-    <input type="text" disabled="disabled" id="time" value="" size="50">
-    <!--<input type="text" disabled="disabled" id="stopwatch" value="" size="">--> <h1><time>00:00:00</time></h1>
+    <input type="text" disabled="disabled" id="time" value="" size="">
+    <br></br>
+    <!--<input type="text" disabled="disabled" id="stopwatch" value="" size="">--> <h0><time>00:00:00</time></h0>
     <br></br>
     <input type="button" value=Start onclick="start()"> 
     <input type="button" value=Stop onclick="stop()"> 
+    <input type="button" value=Clear onclick="clear()"> 
     
     <script src="jquery-3.4.1.min.js"></script>
     <script>
-        var h1 = document.getElementsByTagName('h1')[0],
+        var h0 = document.getElementsByTagName('h0')[0],
         seconds = 0, minutes = 0, hours = 0,
         t;
-        var started = false;
             window.setInterval(function() {
                 showCurrentTime();
-                if(started)
-                {
-                    add();
-                }
-                tick();
             }, 1000);
     function start() {
-        t = setTimeout(add, 1000);
-        started = true;
+        t = setTimeout(add, 10);
     }
     function add() {
         seconds++;
@@ -40,7 +47,7 @@
             }
         }
     
-    h1.textContent = (hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
+    h0.textContent = (hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
 
     start();
     }
@@ -80,10 +87,15 @@
         }
 
         // put together the string that displays the time
-        var clockTime = hours + ':' + minutes + ':' + seconds + " " + meridian + "!";
+        var clockTime = hours + ':' + minutes + ':' + seconds + " " + meridian;
         
         console.log(hours);
         document.getElementById("time").value = clockTime;
+    }
+
+    function clear() {
+        h0.textContent = "00:00:00";
+        seconds = 0; minutes = 0; hours = 0;
     }
     </script>
 </body>
