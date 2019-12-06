@@ -20,7 +20,7 @@
 <body>
     <input type="text" disabled="disabled" id="time" value="" size="">
     <br></br>
-    <!--<input type="text" disabled="disabled" id="stopwatch" value="" size="">--> <h0><time>00:00:00</time></h0>
+    <!--<input type="text" disabled="disabled" id="stopwatch" value="" size="">--> <h0><time>00:00:00.000</time></h0>
     <br></br>
     <input type="button" value=Start onclick="start()"> 
     <input type="button" value=Stop onclick="stop()"> 
@@ -28,36 +28,63 @@
     
     <script src="jquery-3.4.1.min.js"></script>
     <script>
+        var startTime;
+        var firstTime = true;
+        var started = false;
         var h0 = document.getElementsByTagName('h0')[0],
-        seconds = 0, minutes = 0, hours = 0,
         t;
             window.setInterval(function() {
                 showCurrentTime();
             }, 1000);
     function start() {
-        t = setInterval(add, 1000);
-    }
-    function add() {
-        //TODO: Use the system clock to do this function
-        seconds++;
-        if (seconds >= 60) {
-            seconds = 0;
-            minutes++;
-            if (minutes >= 60) {
-                minutes = 0;
-                hours++;
+        //TODO: Return if the stopwatch is already running
+        if(!started)
+        {
+            t = setInterval(displayTime, 87);
+            var d = new Date();
+            if(firstTime)
+            {
+                startTime = d.getTime();
+                firstTime = false;
             }
+            started = true;
         }
-    
-        h0.textContent = (hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds); //TODO: Rework into a function and call 3 times
+    }
+    function displayTime() {
+        var d = new Date();
+        var currentTime = d.getTime();
+        var elapsed = currentTime - startTime;
+        var milliseconds, seconds = 0, minutes = 0, hours = 0;
+        var elapsedSeconds = Math.round(elapsed/1000);
+       
+        milliseconds = elapsed % 1000;
+        seconds = elapsedSeconds % 60;
+        minutes = Math.floor(elapsedSeconds / 60);
+        hours = Math.floor(minutes / 60);
+        minutes = minutes % 60;
+
+        h0.textContent = pad(hours, 2) + ":" + pad(minutes, 2) + ":" + pad(seconds, 2) + "." + pad(milliseconds, 3); 
     }
     
+    function pad(num, size){
+        return ('000000000' + num).substr(-size);
+    }
+
     function stop() {
-        clearTimeout(t);
+        if(started)
+        {   
+            clearTimeout(t);
+            displayTime();
+            started = false;
+        }
     }
     function clearBox() {
-        h0.textContent = "00:00:00";
-        seconds = 0; minutes = 0; hours = 0;
+        if(!started)
+        {
+            h0.textContent = "00:00:00.000";
+            seconds = 0; minutes = 0; hours = 0, milliseconds = 0;
+            firstTime = true;
+        }
     }
 
     function showCurrentTime() {
