@@ -12,21 +12,55 @@
         box-sizing: border-box;
         text-align: center;
     }
+
+    body {
+        padding-top: 0px; 
+      }
+
+    .ml-n1 {
+        margin-left: 4 !important;
+    }
     </style>
 <head>
     <meta charset="utf-8">
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Clock</title>
 </head>
 <body>
+        <nav class="navbar navbar-light bg-light">
+                <a class="navbar-brand" href="#">Home</a>
+                <button class="navbar-toggler navbar-dark" type="button" data-toggle="collapse" data-target="#main-navigation">
+                  <span class="navbar-toggler-icon">v</span>
+                </button>
+                <div class="collapse navbar-collapse" id="main-navigation">
+                  <ul class="navbar-nav">
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">Calculator</a>
+                    </li>
+                    <li class="nav-item">
+                            <a class="nav-link" href="#">Clock</a>
+                          </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">About</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">Contact</a>
+                    </li>
+                  </ul>
+                </div>
+              </nav>
     <input type="text" disabled="disabled" id="time" value="" size="">
     <br></br>
     <!--<input type="text" disabled="disabled" id="stopwatch" value="" size="">--> <h0><time>00:00:00.000</time></h0>
     <br></br>
-    <input type="button" value=Start onclick="start()"> 
-    <input type="button" value=Stop onclick="stop()"> 
-    <input type="button" value=Clear onclick="clearBox()"> 
+    <button class="btn btn-success" type="button" onclick="start()">Start</button>
+    <button class="btn btn-warning" type="button" onclick="stop()">Stop</button>
+    <button class="btn btn-danger" type="button" onclick="clearBox()">Clear</button>
     
     <script src="jquery-3.4.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
     <script>
         var startTime;
         var firstTime = true;
